@@ -1,8 +1,5 @@
 package br.ufba.mestrado.algoritimos.grafos;
 
-public class GFGWithBinarySearch {
-}
-
 class GFG
 {
 
