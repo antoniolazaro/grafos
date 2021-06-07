@@ -1,5 +1,7 @@
 package br.ufba.mestrado.algoritimos.grafos.manyaprroaches;
 
+import java.util.Objects;
+
 /*
  * Vertex class - represents the vertex in a graph with an int value.
  * 
@@ -30,4 +32,17 @@ public class Vertex {
 	public String toString() {
 		return Integer.toString(vertex);// returns the printing prepared version of the Vertex
 	}// toString() method
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Vertex vertex1 = (Vertex) o;
+		return vertex == vertex1.vertex;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(vertex);
+	}
 }// class Vertex

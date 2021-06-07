@@ -11,7 +11,7 @@ public class VertexCoverTester {
 	public static void main(String[] args) {
 		experimento1();
 		System.out.println();// displays blank line between graphs/tests
-		experimento2();
+//		experimento2();
 
 	}
 
@@ -27,11 +27,14 @@ public class VertexCoverTester {
 		System.out.println(testGraph);
 		// Creates the testGraph and runs various Vertex Cover approaches
 		VertexCover vertexCover = new VertexCover(testGraph, 2);// creates VertexCover instance with Graph and k
+		// runs Greedy Cover approach
 		vertexCover.bruteForce();// runs Brute Force approach
 		vertexCover.optimizedBruteForce();// runs Optimized Brute Force approach
 		vertexCover.firstSolution();// runs First Solution approach
 		vertexCover.greedyCover();// runs Greedy Cover approach
+		vertexCover.greedyCoverModified();
 		vertexCover.approxCover();// runs Approx Cover approach
+		vertexCover.approxCoverModified();
 	}
 
 	private static void experimento2() {

@@ -9,6 +9,7 @@ package br.ufba.mestrado.algoritimos.grafos.manyaprroaches;
 public class Edge {
 	private Vertex vertex1;// instance variable of Edge, represents the first endpoint Vertex
 	private Vertex vertex2;// instance variable of Edge, represents the second endpoint Vertex
+	private boolean counted;
 	
 	// Constructor for two Vertices
 	public Edge(Vertex vertex1, Vertex vertex2) {
@@ -71,4 +72,13 @@ public class Edge {
 	public String toString() {
 		return "(" + vertex1 + ", " + vertex2 + ")";// defines how to display an Edge when printed
 	}// toString() method
+
+	public boolean getCounted(){
+		return counted;
+	}
+
+	public void setCounted(boolean counted){
+		this.counted = counted;
+	}
+
 }// Edge class

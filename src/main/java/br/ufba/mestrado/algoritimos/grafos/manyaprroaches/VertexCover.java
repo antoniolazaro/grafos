@@ -7,10 +7,7 @@ package br.ufba.mestrado.algoritimos.grafos.manyaprroaches;/*
 
 import java.time.Duration;// imports library used for measuring the runtime of methods
 import java.time.Instant;// imports library used for measuring the runtime of methods
-import java.util.ArrayList;// imports library used to create lists for Vertices, Edges, and Covers
-import java.util.HashMap;// imports library used to hold Vertices and the number of times they appear in a Graph
-import java.util.Map;// imports library used to hold Vertices and the number of times they appear in a Graph
-import java.util.Random;// imports library used to randomize the edges chosen in the Approx Cover
+import java.util.*;
 
 public class VertexCover {
 	private Graph graph;// instance variable of VertexCover, represents the Graph
@@ -242,6 +239,16 @@ public class VertexCover {
 	// Random-edge-selection approximation approach to finding a Vertex Cover
 	protected void approxCover() {
 		Instant startTime = Instant.now();// gets current time as start time for greedyCover approach
+		approxCoverAlgorithm();
+		Instant endTime = Instant.now();// gets current time as end time for approxCover approach
+		System.out.println("----------APPROX COVER--------------------------------------------------");// for formatting purposes
+		System.out.println("An approximation cover for the graph has been found:");// displays that a cover has been found
+		System.out.println("The vertices of the approximation cover are: " + cover.toString());// displays the Vertices in the approx cover
+		System.out.println("Approx Duration: " + (Duration.between(startTime,endTime).toNanos()));// displays run time for approxCover
+		System.out.println("------------------------------------------------------------------------");// for formatting purposes
+	}// approxCover() method
+
+	private void approxCoverAlgorithm() {
 		ArrayList<Edge> edges = graph.getEdges();// gets all the Edges in the Graph
 		cover = new ArrayList<Vertex>();// creates a new ArrayList<Vertex> to hold the Vertex cover
 		while (!edges.isEmpty()) {// loops until a Vertex cover has been found
@@ -253,17 +260,21 @@ public class VertexCover {
 			this.removeEdges(e.getVertex1(), edges);// removes all the Edges that contain the first Vertex in the Edge selected above
 			this.removeEdges(e.getVertex2(), edges);// removes all the Edges that contain the second Vertex in the Edge selected above
 		}// while (!edges)
-		Instant endTime = Instant.now();// gets current time as end time for approxCover approach
-		System.out.println("----------APPROX COVER--------------------------------------------------");// for formatting purposes
-		System.out.println("An approximation cover for the graph has been found:");// displays that a cover has been found
-		System.out.println("The vertices of the approximation cover are: " + cover.toString());// displays the Vertices in the approx cover
-		System.out.println("Approx Duration: " + (Duration.between(startTime,endTime).toNanos()));// displays run time for approxCover
-		System.out.println("------------------------------------------------------------------------");// for formatting purposes
-	}// approxCover() method
-	
+	}
+
 	// Greedy Cover approximation approach to finding a Vertex Cover
 	protected void greedyCover() {
 		Instant startTime = Instant.now();// gets current time as start time for greedyCover approach
+		greeyCoverAlgorithm();
+		Instant endTime = Instant.now();// gets current time as end time for greedyCover approach
+		System.out.println("----------GREEDY COVER--------------------------------------------------");// for formatting purposes
+		System.out.println("A greedy cover for the graph has been found:");// displays that a cover has been found
+		System.out.println("The vertices of the greedy cover are: " + cover.toString());// displays the Vertices in the greedy cover
+		System.out.println("Greedy Duration: " + (Duration.between(startTime,endTime).toNanos()));// displays run time for greedyCover
+		System.out.println("------------------------------------------------------------------------");// for formatting purposes
+	}// greedyCover() method
+
+	private void greeyCoverAlgorithm() {
 		ArrayList<Edge> edges = graph.getEdges();// gets all the Edges in the Graph
 		ArrayList<Vertex> vertices = graph.getVertices();// gets all the Vertices in the Graph
 		cover = new ArrayList<Vertex>();// creates a new ArrayList<Vertex> to hold the Vertex cover
@@ -273,11 +284,41 @@ public class VertexCover {
 			vertices.remove(vertex);// removes the Vertex found above from the list of available Vertices
 			this.removeEdges(vertex, edges);// removes all the Edges that contain the Vertex found above as an endpoint
 		}// while (!edges)
-		Instant endTime = Instant.now();// gets current time as end time for greedyCover approach
-		System.out.println("----------GREEDY COVER--------------------------------------------------");// for formatting purposes
-		System.out.println("A greedy cover for the graph has been found:");// displays that a cover has been found
-		System.out.println("The vertices of the greedy cover are: " + cover.toString());// displays the Vertices in the greedy cover
-		System.out.println("Greedy Duration: " + (Duration.between(startTime,endTime).toNanos()));// displays run time for greedyCover
+	}
+
+	protected void greedyCoverModified() {
+		greeyCoverAlgorithm();
+		Set<Vertex> coveredImprooved = calculateRepetitionOnEdge();
+		System.out.println("----------GREEDY COVER MODIFIED--------------------------------------------------");// for formatting purposes
+		System.out.println("The vertices of the greedy cover modified are: " + coveredImprooved);// displays the Vertices in the greedy cover
 		System.out.println("------------------------------------------------------------------------");// for formatting purposes
-	}// greedyCover() method
+	}
+
+	private Set<Vertex> calculateRepetitionOnEdge(){
+		Set<Vertex> coveredImprooved = new HashSet<>();
+		cover.forEach(coveredVertex -> {
+			graph.getEdges().forEach(edge ->{
+				if(!edge.getCounted() && edge.hasVertex(coveredVertex)) {
+					cover.forEach(c -> {
+						if(!c.equals(coveredVertex) && edge.hasVertex(c)){
+							edge.setCounted(true);
+							System.out.println("Edge found with two vertex covered: "+edge);
+							coveredImprooved.add(c);
+						}
+					});
+				}
+			});
+		});
+		if(coveredImprooved.isEmpty()){
+			coveredImprooved.addAll(cover);
+		}
+		return coveredImprooved;
+	}
+
+	protected void approxCoverModified() {
+		Set<Vertex> coveredImprooved = calculateRepetitionOnEdge();
+		System.out.println("----------Approx COVER MODIFIED--------------------------------------------------");// for formatting purposes
+		System.out.println("The vertices of the approx cover modified are: " + coveredImprooved);// displays the Vertices in the greedy cover
+		System.out.println("------------------------------------------------------------------------");// for formatting purposes
+	}
 }// VertexCover class
