@@ -45,4 +45,5 @@ public class Vertex {
 	public int hashCode() {
 		return Objects.hash(vertex);
 	}
+
 }// class Vertex

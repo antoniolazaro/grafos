@@ -1,5 +1,9 @@
 package br.ufba.mestrado.algoritimos.grafos.manyaprroaches;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 /*
  * Edge class - represents the edge in a graph with two endpoints.
  * 
@@ -58,6 +62,32 @@ public class Edge {
 	public Vertex getVertex2() {
 		return this.vertex2;// returns the second Vertex endpoint of the Edge
 	}// getVertex2() method
+
+	public Vertex getOposedVertex(Vertex vertex) {
+		if(hasVertex(vertex)){
+			if(vertex.equals(vertex1)){
+				return vertex2;
+			}else{
+				return vertex1;
+			}
+		}
+		return null;
+	}
+
+	public Vertex getCurrentVertex(Vertex vertex) {
+		if(hasVertex(vertex)){
+			if(vertex.equals(vertex1)){
+				return vertex1;
+			}else{
+				return vertex2;
+			}
+		}
+		return null;
+	}
+
+	public List<Vertex> getVertexs(){
+		return Arrays.asList(vertex1, vertex2);
+	}
 	
 	// Allows the user to determine if an Edge has a specific Vertex as an endpoint
 	public boolean hasVertex(Vertex vertex) {
@@ -78,7 +108,9 @@ public class Edge {
 	}
 
 	public void setCounted(boolean counted){
-		this.counted = counted;
+		this.counted = counted
+
+		;
 	}
 
 }// Edge class

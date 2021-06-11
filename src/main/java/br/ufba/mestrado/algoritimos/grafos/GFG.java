@@ -1,5 +1,8 @@
 package br.ufba.mestrado.algoritimos.grafos;
 
+import br.ufba.mestrado.algoritimos.grafos.manyaprroaches.Edge;
+import br.ufba.mestrado.algoritimos.grafos.manyaprroaches.Vertex;
+
 class GFG
 {
 
@@ -111,12 +114,21 @@ class GFG
         \ | \
         2 4 */
         int V = 6, E = 6;
+        insertEdge(5, 1);
+        insertEdge(5, 4);
         insertEdge(1, 2);
-        insertEdge(2, 3);
-        insertEdge(1, 3);
         insertEdge(1, 4);
         insertEdge(1, 5);
-        insertEdge(1, 6);
+        insertEdge(4, 5);
+        insertEdge(4, 1);
+        insertEdge(4, 3);
+        insertEdge(2, 3);
+        insertEdge(2, 1);
+        insertEdge(2, 6);
+        insertEdge(3, 4);
+        insertEdge(3, 2);
+        insertEdge(6, 2);
+
         System.out.print("Minimum size of a vertex cover = "
                 + findMinCover(V, E) +"\n");
 

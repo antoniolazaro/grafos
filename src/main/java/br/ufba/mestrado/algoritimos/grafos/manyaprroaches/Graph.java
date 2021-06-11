@@ -5,12 +5,19 @@ package br.ufba.mestrado.algoritimos.grafos.manyaprroaches;/*
  * Allows the language of a graph to be used when programming.
  */
 
-import java.util.ArrayList;// imports library used to create lists of Vertices and Edges 
+import java.util.ArrayList;// imports library used to create lists of Vertices and Edges
+import java.util.HashMap;
+import java.util.Map;
 
 public class Graph {
 	private ArrayList<Vertex> vertices;// instance variable of Graph, represents the Vertices of the Graph
 	private ArrayList<Edge> edges;// instance variable of Graph, represents the Edges of the Graph
-	
+	private Map<Integer,Vertex> vertexCovered = new HashMap<>();
+
+	public Map<Integer, Vertex> getVertexCovered() {
+		return vertexCovered;
+	}
+
 	// Constructor for int and int arrays
 		public Graph(int[] newVertices, int[]... newEdges) {
 			edges = new ArrayList<Edge>();// creates new instance for edges
